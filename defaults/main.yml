@@ -80,9 +80,6 @@ galera_cluster_bind_interface: "eth0"
 # Define bind address for galera cluster
 galera_cluster_bind_address: "{{ hostvars[inventory_hostname]['ansible_' + galera_cluster_bind_interface]['ipv4']['address'] }}"
 
-# Define wsrep cluster address
-#galera_wsrep_cluster_address: "gcomm://{{ groups[galera_cluster_nodes_group] | map('extract', hostvars, 'galera_cluster_bind_address') | list | join(',') }}"
-
 # Defines wsrep node address
 galera_wsrep_node_address: "{{ galera_cluster_bind_address }}:{{ galera_wsrep_node_address_port }}"
 
