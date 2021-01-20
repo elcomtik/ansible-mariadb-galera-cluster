@@ -9,11 +9,13 @@
   become: true
   register: repo_added
 
-- name: redhat | yum clean metadata
-  command: "yum clean metadata" # noqa 503
+- name: redhat | clean dnf metadata (centos8 & fedora)
+  shell: "dnf clean all && rm -r /var/cache/dnf" # noqa 503
   args:
     warn: false
-  when: repo_added.changed
+  when:
+    - repo_added.changed
+    - ansible_distribution_major_version is version('8', '>=')
 
 - name: redhat | installing pre-reqs
   yum:
