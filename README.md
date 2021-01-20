@@ -10,7 +10,6 @@
     -   [Vagrant](#vagrant)
     -   [Role Variables](#role-variables)
     -   [Dependencies](#dependencies)
-        -   [Ansible roles](#ansible-roles)
     -   [Example Playbook](#example-playbook)
     -   [License](#license)
     -   [Author Information](#author-information)

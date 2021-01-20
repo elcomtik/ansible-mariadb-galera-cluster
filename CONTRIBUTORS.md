@@ -1,1 +1,2 @@
-Your Name - me@example.com
+Larry Smith Jr. - mrlesmithjr@gmail.com
+Roman Danko - mail@romandanko.sk
