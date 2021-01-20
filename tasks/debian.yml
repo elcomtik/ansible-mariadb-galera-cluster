@@ -12,31 +12,15 @@
   become: true
   loop:
 
-- name: debian | Adding MariaDB Repo Keys
+- name: debian | adding MariaDB Repo Keys
   apt_key:
     keyserver: "{{ mariadb_debian_repo_keyserver }}"
-    id: "0xcbcb082a1bb943db"
+    id: "{{ mariadb_debian_repo_key }}"
     state: "present"
   become: true
-  when: >
-    galera_enable_mariadb_repo|bool and (
-    ansible_distribution == "Debian" or
-    (ansible_distribution == "Ubuntu" and
-    ansible_distribution_version <= '14.04')
-    )
+  when: galera_enable_mariadb_repo|bool
 
-- name: debian | Adding MariaDB Repo Keys
-  apt_key:
-    keyserver: "{{ mariadb_debian_repo_keyserver }}"
-    id: "0xF1656F24C74CD1D8"
-    state: "present"
-  become: true
-  when:
-    - galera_enable_mariadb_repo|bool
-    - ansible_distribution == "Ubuntu"
-    - ansible_distribution_version is version('16.04', '>=')
-
-- name: debian | Pinning MariaDB Repo
+- name: debian | pinning MariaDB Repo
   template:
     src: "etc/apt/preferences.d/mariadb.j2"
     dest: "/etc/apt/preferences.d/mariadb"
@@ -83,7 +67,6 @@
       value: "{{ mariadb_mysql_root_password }}"
     - question: "mysql-server/root_password_again"
       value: "{{ mariadb_mysql_root_password }}"
-  when: ansible_os_family == "Debian"
 
 - name: debian | installing mariadb-galera packages
   apt:

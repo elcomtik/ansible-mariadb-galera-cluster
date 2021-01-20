@@ -11,7 +11,6 @@ galera_enable_mariadb_repo: true
 
 # Defines repository settings for apt
 mariadb_debian_repo: "deb [arch=amd64,i386,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/{{ mariadb_version }}/{{ ansible_distribution|lower }} {{ ansible_distribution_release|lower }} main"
-mariadb_debian_repo_key: "0xF1656F24C74CD1D8"
 mariadb_debian_repo_keyserver: "keyserver.ubuntu.com"
 mariadb_debian_repo_pin: "nyc2.mirrors.digitalocean.com"
 

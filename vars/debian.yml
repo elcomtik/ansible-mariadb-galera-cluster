@@ -5,6 +5,8 @@ mariadb_pre_req_packages:
   - "software-properties-common"
   - "python-mysqldb"
   - "rsync"
+  - "gnupg"
+mariadb_debian_repo_key: "0xF1656F24C74CD1D8"
 mariadb_packages:
   - "mariadb-server"
 mariadb_systemd_service_name: "mysql"
