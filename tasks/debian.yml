@@ -73,13 +73,3 @@
     name: "{{ mariadb_packages }}"
     state: "present"
   become: true
-
-- name: debian | adding debian-sys-maintenance permissions to mysql
-  mysql_user:
-    name: "debian-sys-maint"
-    priv: "*.*:ALL,GRANT"
-    state: "present"
-    password: "{{ mariadb_mysql_root_password }}"
-    login_unix_socket: "{{ mariadb_login_unix_socket }}"
-  no_log: true
-  become: true
