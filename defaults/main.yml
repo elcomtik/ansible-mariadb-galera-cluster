@@ -78,8 +78,6 @@ galera_reconfigure_galera: false
 galera_cluster_bind_interface: "eth0"
 
 # Define bind address for galera cluster
-#galera_cluster_bind_address: "{{ hostvars[inventory_hostname]['ansible_' + galera_cluster_bind_interface]['ipv4']['address'] }}"
-#galera_cluster_bind_address: "{{ lookup('vars', 'ansible_' + galera_cluster_bind_interface + '.ipv4.address' ) }}"
 galera_cluster_bind_address: "{{ hostvars[inventory_hostname]['ansible_' + galera_cluster_bind_interface]['ipv4']['address'] }}"
 
 # Define wsrep cluster address
