@@ -9,6 +9,12 @@
   become: true
   register: repo_added
 
+- name: redhat | yum clean metadata
+  command: "yum clean metadata" # noqa 503
+  args:
+    warn: false
+  when: repo_added.changed
+
 - name: redhat | installing pre-reqs
   yum:
     name: "{{ mariadb_pre_req_packages }}"
