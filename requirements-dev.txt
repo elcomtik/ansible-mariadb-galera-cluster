@@ -22,6 +22,6 @@ pylint==2.6.0             # via -r requirements-dev.in
 pyparsing==2.4.7          # via -c requirements.txt, packaging
 six==1.15.0               # via -c requirements.txt, astroid, tox, virtualenv
 toml==0.10.2              # via autopep8, pylint, tox
-tox==3.21.1               # via -r requirements-dev.in
-virtualenv==20.3.1        # via tox
+tox==3.21.2               # via -r requirements-dev.in
+virtualenv==20.4.0        # via tox
 wrapt==1.12.1             # via astroid

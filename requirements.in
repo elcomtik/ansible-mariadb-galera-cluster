@@ -6,3 +6,4 @@ mkdocs
 molecule[docker]
 pip-tools
 yamllint
+netaddr
