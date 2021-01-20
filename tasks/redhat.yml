@@ -5,6 +5,7 @@
     dest: "/etc/yum.repos.d/MariaDB.repo"
     owner: "root"
     group: "root"
+    mode: '0644'
   become: true
   register: repo_added
 
@@ -37,7 +38,7 @@
 
 # fix for conflicting package from appstream
 - name: redhat | disable appstream mysql/mariadb modules
-  command: 
+  command:
     cmd: "dnf -y module disable mysql mariadb"
     warn: false
   changed_when: false

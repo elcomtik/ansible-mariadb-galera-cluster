@@ -17,12 +17,13 @@
   template:
     src: "{{ item }}.j2"
     dest: "/{{ item }}"
+    mode: '0644'
   become: true
   register: "_mariadb_galera_cluster_reconfigured"
   loop: "{{ mariadb_confs }}"
-    
+
 - name: setup_cluster | restarting node to apply config changes (first node)
-  service:
+  service: # noqa 503
     name: "{{ mariadb_systemd_service_name }}"
     state: "restarted"
   become: true
@@ -32,7 +33,7 @@
     inventory_hostname == galera_mysql_first_node
 
 - name: setup_cluster | ensure first node is fully started before restarting other nodes
-  service:
+  service: # noqa 503
     name: "{{ mariadb_systemd_service_name }}"
     state: "started"
   become: true
@@ -48,7 +49,7 @@
     inventory_hostname != galera_mysql_first_node
 
 - name: setup_cluster | restarting node to apply config changes (other nodes)
-  service:
+  service: # noqa 503
     name: "{{ mariadb_systemd_service_name }}"
     state: "restarted"
   become: true
@@ -86,7 +87,7 @@
     not galera_cluster_configured.stat.exists and
     inventory_hostname == galera_mysql_first_node
 
-- name: setup_cluster | sleep for 15 seconds to wait for nodes to fully shut down 
+- name: setup_cluster | sleep for 15 seconds to wait for nodes to fully shut down
   wait_for:
     timeout: 15
   delegate_to: localhost
@@ -103,6 +104,7 @@
   template:
     src: "{{ item }}.temp.j2"
     dest: "/{{ item }}"
+    mode: '0644'
   become: true
   loop: "{{ mariadb_temp_confs }}"
   when: >
@@ -155,6 +157,7 @@
   template:
     src: "{{ item }}.j2"
     dest: "/{{ item }}"
+    mode: '0644'
   loop: "{{ mariadb_confs }}"
   become: true
   when: >
@@ -174,6 +177,7 @@
   file:
     path: "/etc/galera_cluster_configured"
     state: "touch"
+    mode: '0644'
   become: true
   when: not galera_cluster_configured.stat.exists
 
