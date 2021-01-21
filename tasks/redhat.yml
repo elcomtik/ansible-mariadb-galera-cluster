@@ -10,6 +10,15 @@
   become: true
   register: "repo_added"
 
+# fix for conflicting package from appstream
+- name: redhat | disable appstream mysql/mariadb modules
+  command:
+    cmd: "dnf -y module disable mysql mariadb"
+    warn: false
+  changed_when: false
+  become: true
+  when: ansible_distribution_major_version is version('8', '>=')
+
 - name: redhat | clean dnf metadata (centos8 & fedora)
   shell: "dnf clean all && rm -r /var/cache/dnf" # noqa 503
   become: true
