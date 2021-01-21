@@ -1,8 +1,8 @@
 ---
 mariadb_login_unix_socket: "/var/lib/mysql/mysql.sock"
-mariadb_pre_req_packages: []
-mariadb_packages:
+mariadb_pre_req_packages:
   - "MySQL-python"
+mariadb_packages:
   - "MariaDB-server"
   - "galera-4"
 mariadb_systemd_service_name: "mysql"
