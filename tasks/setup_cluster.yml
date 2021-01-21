@@ -133,6 +133,13 @@
     not galera_cluster_configured.stat.exists and
     inventory_hostname != galera_mysql_first_node
 
+- name: setup_cluster | sleep for 15 seconds to wait for node WSREP prepared state
+  wait_for:
+    timeout: 15
+  delegate_to: localhost
+  when: >
+    not galera_cluster_configured.stat.exists
+
 - name: setup_cluster | joining galera cluster
   service:
     name: "{{ mariadb_systemd_service_name }}"
