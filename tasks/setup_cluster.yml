@@ -169,6 +169,7 @@
     name: "{{ mariadb_systemd_service_name }}"
     state: "restarted"
   become: true
+  register: "_mariadb_galera_cluster_node_restarted"
   when: >
     not galera_cluster_configured.stat.exists and
     inventory_hostname == galera_mysql_first_node
@@ -190,3 +191,16 @@
   until: _mariadb_galera_cluster_node.status.ActiveState == "active"
   retries: 60
   delay: 5
+
+# Configuring root access, mysql_users, mysql_databases or cacti monitoring
+# need database to be ready to receive SQL statements
+# we need to be sure that WSREP is ready
+- name: setup_cluster | sleep for 15 seconds to wait for node WSREP prepared state
+  wait_for: # noqa 503
+    timeout: 15
+  delegate_to: localhost
+  when: >
+    _mariadb_galera_cluster_reconfigured.changed or
+    _mariadb_galera_cluster_node_restarted.changed
+
+
