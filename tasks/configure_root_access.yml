@@ -10,20 +10,6 @@
   no_log: true
   when: ansible_os_family == "RedHat"
 
-- name: configure_root_access | adding debian-sys-maintenance permissions to mysql
-  mysql_user:
-    name: "debian-sys-maint"
-    priv: "*.*:ALL,GRANT"
-    state: "present"
-    password: "{{ mariadb_mysql_root_password }}"
-    login_unix_socket: "{{ mariadb_login_unix_socket }}"
-  no_log: true
-  become: true
-  run_once: true
-  retries: 6
-  delay: 5
-  when: ansible_os_family == "Debian"
-
 - name: configure_root_access | updating root passwords
   mysql_user:
     host: "{{ item }}"
