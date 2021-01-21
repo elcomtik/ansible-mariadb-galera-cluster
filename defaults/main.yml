@@ -15,7 +15,7 @@ mariadb_debian_repo_keyserver: "keyserver.ubuntu.com"
 mariadb_debian_repo_pin: "nyc2.mirrors.digitalocean.com"
 
 # Defines repository settings for rpm
-mariadb_redhat_repo: "http://yum.mariadb.org/{{ mariadb_version }}/{{ ansible_distribution|lower }}{{ ansible_distribution_major_version|int }}-amd64"
+mariadb_redhat_repo: "http://yum.mariadb.org/{{ mariadb_version }}/{{ ansible_distribution|lower }}{{ ansible_distribution_major_version }}-amd64"
 mariadb_redhat_repo_key: "https://yum.mariadb.org/RPM-GPG-KEY-MariaDB"
 
 # bind address for MariaDB's 3306 port.
