@@ -1,8 +1,0 @@
-[mariadb]
-name = MariaDB
-baseurl = {{ mariadb_redhat_repo }}
-gpgkey={{ mariadb_redhat_repo_key }}
-gpgcheck=1
-{% if ansible_distribution_major_version is version('8', '>=') %}
-module_hotfixes=1
-{% endif %}
