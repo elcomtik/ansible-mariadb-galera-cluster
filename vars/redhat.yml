@@ -4,7 +4,7 @@ mariadb_pre_req_packages: []
 mariadb_packages:
   - "MySQL-python"
   - "MariaDB-server"
-  - "galera"
+  - "galera-4"
 mariadb_systemd_service_name: "mysql"
 mariadb_confs:
   - "etc/my.cnf.d/server.cnf"
