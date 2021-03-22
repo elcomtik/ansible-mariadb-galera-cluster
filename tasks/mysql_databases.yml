@@ -5,17 +5,21 @@
 - name: mysql_databases | create the databases
   mysql_db:
     name: "{{ item.name }}"
-    state: present
+    state: "present"
     login_unix_socket: "{{ mariadb_login_unix_socket }}"
-  with_items: "{{ mariadb_databases }}"
   become: true
   register: _db
+  delegate_to: "{{ galera_mysql_first_node }}"
+  run_once: true
+  with_items: "{{ mariadb_databases }}"
 
 - name: mysql_databases | copy database init scripts
   copy: # noqa 503
     src: "{{ item.item.init_script }}"
     dest: "/tmp/{{ item.item.init_script | basename }}"
     mode: "0600"
+  delegate_to: "{{ galera_mysql_first_node }}"
+  run_once: true
   with_items: "{{ _db.results }}"
   when:
     - item.changed
@@ -24,11 +28,13 @@
 - name: mysql_databases | initialise databases
   mysql_db: # noqa 503
     name: "{{ item.item.name }}"
-    state: import
+    state: "import"
     target: "/tmp/{{ item.item.init_script | basename }}"
     login_unix_socket: "{{ mariadb_login_unix_socket }}"
-  with_items: "{{ _db.results }}"
   become: true
+  delegate_to: "{{ galera_mysql_first_node }}"
+  run_once: true
+  with_items: "{{ _db.results }}"
   when:
     - item.changed
     - item.item.init_script is defined
@@ -36,7 +42,9 @@
 - name: mysql_databases | delete init scripts from the server
   file: # noqa 503
     name: "/tmp/{{ item.item.init_script | basename }}"
-    state: absent
+    state: "absent"
+  delegate_to: "{{ galera_mysql_first_node }}"
+  run_once: true
   with_items: "{{ _db.results }}"
   when:
     - item.changed
