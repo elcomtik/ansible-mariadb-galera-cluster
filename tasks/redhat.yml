@@ -70,13 +70,13 @@
   notify: reload systemd daemon
 
 - name: redhat | ensuring mariadb mysql is enabled on boot
-  service:
+  systemd:
     name: "mariadb"
     enabled: true
   become: true
 
 - name: redhat | start only the first node to add users
-  service:
+  systemd:
     name: "mariadb"
     state: started
   become: true

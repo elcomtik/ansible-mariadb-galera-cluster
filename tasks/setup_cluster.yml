@@ -50,7 +50,7 @@
   loop: "{{ mariadb_confs }}"
 
 - name: setup_cluster | restarting node to apply config changes (first node)
-  service: # noqa 503
+  systemd: # noqa 503
     name: "{{ mariadb_systemd_service_name }}"
     state: "restarted"
   become: true
@@ -60,7 +60,7 @@
     inventory_hostname == galera_mysql_first_node
 
 - name: setup_cluster | ensure first node is fully started before restarting other nodes
-  service: # noqa 503
+  systemd: # noqa 503
     name: "{{ mariadb_systemd_service_name }}"
     state: "started"
   become: true
@@ -76,7 +76,7 @@
     inventory_hostname != galera_mysql_first_node
 
 - name: setup_cluster | restarting node to apply config changes (other nodes)
-  service: # noqa 503
+  systemd: # noqa 503
     name: "{{ mariadb_systemd_service_name }}"
     state: "restarted"
   become: true
@@ -88,7 +88,7 @@
 
 # (Re)configure cluster settings
 - name: setup_cluster | stopping mysql to (re)configure cluster (other nodes)
-  service:
+  systemd:
     name: "{{ mariadb_systemd_service_name }}"
     state: "stopped"
   become: true
@@ -102,7 +102,7 @@
     inventory_hostname != galera_mysql_first_node
 
 - name: setup_cluster | stopping mysql to (re)configure cluster (first node)
-  service:
+  systemd:
     name: "{{ mariadb_systemd_service_name }}"
     state: "stopped"
   become: true
@@ -147,7 +147,7 @@
     inventory_hostname == galera_mysql_first_node
 
 - name: setup_cluster | ensure first node is fully started before joining other nodes
-  service:
+  systemd:
     name: "{{ mariadb_systemd_service_name }}"
     state: "started"
   become: true
@@ -170,7 +170,7 @@
     not galera_cluster_configured.stat.exists
 
 - name: setup_cluster | joining galera cluster
-  service:
+  systemd:
     name: "{{ mariadb_systemd_service_name }}"
     state: "started"
   become: true
@@ -203,7 +203,7 @@
     inventory_hostname == galera_mysql_first_node
 
 - name: setup_cluster | restarting first node with final galera config
-  service:
+  systemd:
     name: "{{ mariadb_systemd_service_name }}"
     state: "restarted"
   become: true
@@ -221,7 +221,7 @@
   when: not galera_cluster_configured.stat.exists
 
 - name: setup_cluster | ensure node is fully started (synced with cluster)
-  service:
+  systemd:
     name: "{{ mariadb_systemd_service_name }}"
     state: "started"
   become: true
